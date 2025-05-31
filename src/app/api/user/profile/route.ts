@@ -47,13 +47,13 @@ export async function GET() {
 export async function PUT(req: Request) {
   try {
     const userId = await getUserId();
-    const { name, bio } = await req.json();
+    const { name, bio, activities, education, workExperience, age, achievements, futureGoals, isShowcasingWork, lookingForHelp, lookingToHire } = await req.json();
 
     await connectDB();
 
     const user = await User.findByIdAndUpdate(
       userId,
-      { name, bio },
+      { name, bio, activities, education, workExperience, age, achievements, futureGoals, isShowcasingWork, lookingForHelp, lookingToHire },
       { new: true }
     ).select('-password');
 
