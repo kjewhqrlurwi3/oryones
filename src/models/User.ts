@@ -78,6 +78,45 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  verificationStatus: {
+    studentId: {
+      verified: { type: Boolean, default: false },
+      documentUrl: String,
+      verifiedAt: Date
+    },
+    nationalId: {
+      verified: { type: Boolean, default: false },
+      documentUrl: String,
+      verifiedAt: Date
+    },
+    professionalTest: {
+      completed: { type: Boolean, default: false },
+      score: Number,
+      completedAt: Date
+    }
+  },
+  skills: [{
+    name: String,
+    level: {
+      type: String,
+      enum: ['beginner', 'intermediate', 'advanced', 'expert']
+    },
+    verified: { type: Boolean, default: false }
+  }],
+  teachingProfile: {
+    isTeacher: { type: Boolean, default: false },
+    subjects: [{
+      name: String,
+      description: String,
+      pricePerHour: Number,
+      isSubscriptionOnly: { type: Boolean, default: false }
+    }],
+    availability: [{
+      day: String,
+      startTime: String,
+      endTime: String
+    }]
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -98,4 +137,4 @@ userSchema.methods.matchPassword = async function (enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-export default mongoose.models.User || mongoose.model('User', userSchema); 
+export default mongoose.models.User || mongoose.model('User', userSchema);
